@@ -146,7 +146,7 @@ module ServoLib_GenerateServo(servo_model, xcenter, zcenter) {
 // Generate the outline of the screw holes for the given servo model
 // This outline is simply a 2D representation of the holes and it will probably
 // need to be extruded to be useful
-module ServoLib_GenerateScrewHolesOutline(servo_model, xcenter) {
+module ServoLib_GenerateScrewHolesOutline(servo_model, xcenter, diameter_offset=0) {
   body_width = ServoLib_BodyWidth(servo_model);
   axle_offset = ServoLib_AxleOffset(servo_model);
   hole_parameters = _ServoLib_RetrieveScrewHoleParameters(servo_model);
@@ -163,7 +163,7 @@ module ServoLib_GenerateScrewHolesOutline(servo_model, xcenter) {
       hole_table = hole_parameters[i];
       x_offset = hole_table[search(["x offset"], hole_table)[0]][1];
       y_offset = hole_table[search(["y offset"], hole_table)[0]][1];
-      diameter = hole_table[search(["diameter"], hole_table)[0]][1];
+      diameter = hole_table[search(["diameter"], hole_table)[0]][1] + diameter_offset;
 
       translate([x_offset, y_offset])
         circle(d=diameter);
